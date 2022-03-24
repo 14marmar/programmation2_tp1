@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 // Fichier :     Animal.java
 // Création:     30 mars 2022
 // Auteurs :     Alexandre Stang (20211138) et Louis-Antoine Martel-Marquis (20217669)
@@ -20,7 +22,6 @@ public class Animal implements ProiePredateur {
     protected double masse, facteurCroissance;
     protected boolean estPredateur, estProie, estVivant;
 
-    @Override
     public void vieillir() {
         // TODO Auto-generated method stub
         age++;
@@ -31,30 +32,25 @@ public class Animal implements ProiePredateur {
         }
     }
 
-    @Override
     public void manger() {
         // TODO Auto-generated method stub
         
     }
 
-    @Override
     public Animal accoucher() {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
     public void mourir() {
         // TODO Auto-generated method stub
-        
+        estVivant = false;
     }
 
-    @Override
     public boolean estVivant() {
         return estVivant;
     }
 
-    @Override
     public boolean estMature() {
         
         if (age >= ageMature) {
@@ -65,55 +61,47 @@ public class Animal implements ProiePredateur {
 
     }
 
-    @Override
     public void setProie(boolean proie) {
         this.estProie = proie;
     }
 
-    @Override
     public boolean estProie() {
         return estProie;
     }
 
-    @Override
     public void setPredateur(boolean predateur) {
         this.estPredateur = predateur;
     }
 
-    @Override
     public boolean estPredateur() {
         return estPredateur;
     }
 
-    @Override
     public double getMasse() {
         return masse;
     }
 
-    @Override
     public void setMasse(double masse) {
         this.masse = masse;
     }
 
-    @Override
     public void setAge(int age) {
         this.age = age;
     }
 
-    @Override
     public int getAge() {
         return age;
     }
 
-    @Override
     public int getAgeMax() {
         return ageMax;
     }
 
-    @Override
     public int getAgeMature() {
         return ageMature;
     }
+
+    
 
 
 }

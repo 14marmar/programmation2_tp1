@@ -1,6 +1,6 @@
 // Fichier :     Population.java
-// Création:     
-// Auteurs :     
+// Création:     30 mars 2022
+// Auteurs :     Alexandre Stang (20211138) et Louis-Antoine Martel-Marquis (20217669)
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -26,14 +26,73 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     // TO BE COMPLETED //
     private ArrayList<Animal> individus = new ArrayList<>();
 
-    public Population( Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs ) {
-	
-	// TO BE COMPLETED //
-	
+    public Population(Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs) {
+
+        // TO BE COMPLETED //
+
     }
 
-    // TO BE COMPLETED //
-    public ArrayList<Animal> getIndividus(){
-		return this.individus;
-	}
+    public int getNombreProies() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getNombrePredateurs() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getNombreProiesMatures() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getNombrePredateursMatures() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public int getNombreProiesChassables() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public ArrayList<Animal> getIndividus() {
+        // TO BE COMPLETED //
+        return this.individus;
+    }
+
+    public double masseProies() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public double massePredateurs() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public void vieillir() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void chasser() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void reproduire() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void melanger() {
+        Collections.shuffle(this.individus, new Random(4));
+    }
+
+    public Iterator<Animal> iterator() {
+        return null;
+    }
+
 }
