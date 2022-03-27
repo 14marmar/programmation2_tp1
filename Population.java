@@ -23,63 +23,134 @@ import java.util.Random;
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
 
+    private Herbe herbe; // Quantity of herbs
+    private int currentSize; // Current size of individus
+
     // TO BE COMPLETED //
     private ArrayList<Animal> individus = new ArrayList<>();
 
     public Population(Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs) {
 
-        // TO BE COMPLETED //
+        individus.addAll(proies);
+        individus.addAll(predateurs);
+        this.herbe = herbe;
 
+        currentSize = individus.size();
+
+        //vieillir();
     }
 
     public int getNombreProies() {
-        // TODO Auto-generated method stub
-        return 0;
+        int nombreProies = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estProie()) {
+                nombreProies++;
+            }
+        }
+
+        return nombreProies;
     }
 
     public int getNombrePredateurs() {
-        // TODO Auto-generated method stub
-        return 0;
+        int nombrePredateurs = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estPredateur()) {
+                nombrePredateurs++;
+            }
+        }
+
+        return nombrePredateurs;
     }
 
     public int getNombreProiesMatures() {
-        // TODO Auto-generated method stub
-        return 0;
+        int nombreProiesMatures = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estProie() && a.getAge() >= a.getAgeMature()) {
+                nombreProiesMatures++;
+            }
+        }
+
+        return nombreProiesMatures;
     }
 
     public int getNombrePredateursMatures() {
-        // TODO Auto-generated method stub
-        return 0;
+        int nombrePredateursMatures = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estPredateur() && a.getAge() >= a.getAgeMature()) {
+                nombrePredateursMatures++;
+            }
+        }
+
+        System.out.println( nombrePredateursMatures );
+        return nombrePredateursMatures;
     }
 
     public int getNombreProiesChassables() {
-        // TODO Auto-generated method stub
-        return 0;
+        double nombreProies = getNombreProies();
+        double nombreProiesChassablesDouble = Math.round(nombreProies*0.20); // Calculate 20% of the antelope population
+        int nombreProiesChassables = (int)nombreProiesChassablesDouble;
+
+        return nombreProiesChassables;
     }
 
     public ArrayList<Animal> getIndividus() {
-        // TO BE COMPLETED //
         return this.individus;
     }
 
     public double masseProies() {
-        // TODO Auto-generated method stub
-        return 0;
+        double masseProies = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estProie()) {
+                masseProies += a.getMasse();
+            }
+        }
+
+        return masseProies;
     }
 
     public double massePredateurs() {
-        // TODO Auto-generated method stub
-        return 0;
+        double massePredateurs = 0;
+
+        for (Animal a : getIndividus()) {
+            if(a.estPredateur()) {
+                massePredateurs += a.getMasse();
+            }
+        }
+
+        return massePredateurs;
     }
 
     public void vieillir() {
-        // TODO Auto-generated method stub
-        
+        // int index = 0;
+
+        // for (Animal a : getIndividus()) {
+        //     a.vieillir();
+        //     if(!a.estVivant()) {
+        //         getIndividus().remove(index);
+        //     }
+        //     index++;
+        // }
+
+        individus = getIndividus();
+
+        for (int i = 0; i<individus.size(); i++) {
+            Animal a = individus.get(i);
+            a.vieillir();
+            if(!a.estVivant()) {
+                individus.remove(i);
+            }
+        }
+
     }
 
     public void chasser() {
         // TODO Auto-generated method stub
-        
+        melanger();
     }
 
     public void reproduire() {
@@ -91,7 +162,30 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         Collections.shuffle(this.individus, new Random(4));
     }
 
-    public Iterator<Animal> iterator() {
+    public Iterator<Animal> iterator() { // TO VERIFY
+        
+        // Iterator<Animal> a = new Iterator<Animal>() {
+
+        //     private int currentIndex = 0;
+
+        //     @Override
+        //     public boolean hasNext() {
+        //         return currentIndex < currentSize && individus.get(currentIndex) != null;
+        //     }
+
+        //     @Override
+        //     public Animal next() {
+        //         return individus.get(currentIndex++);
+        //     }
+
+        //     @Override
+        //     public void remove() {
+        //         throw new UnsupportedOperationException();
+        //     }
+        // };
+        
+        // return a;
+
         return null;
     }
 

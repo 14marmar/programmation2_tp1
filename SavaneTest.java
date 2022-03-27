@@ -141,7 +141,7 @@ public class SavaneTest implements TP1Stats {
 		  	for(int i = 0; i<test.length;i++){
 				if(test[i] != Double.parseDouble(A[i])){
 					bad = true;
-					System.out.println(message[i] + A[i] + " n'est pas egale a la valuer attendue de : " + test[i]);
+					System.out.println(message[i] + test[i] + " n'est pas egale a la valuer attendue de : " + A[i]);
 					break;
 				}
 			}

@@ -23,7 +23,6 @@ public class Animal implements ProiePredateur {
     protected boolean estPredateur, estProie, estVivant;
 
     public void vieillir() {
-        // TODO Auto-generated method stub
         age++;
         masse = masse * facteurCroissance;
 
