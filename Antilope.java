@@ -29,6 +29,11 @@ public class Antilope extends Animal {
         this.estVivant = true;
     }
 
+    @Override
+    public Animal accoucher() {
+        return new Antilope(facteurCroissance);
+    }
+
 }
 
 

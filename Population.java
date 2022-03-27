@@ -37,7 +37,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         currentSize = individus.size();
 
-        //vieillir();
     }
 
     public int getNombreProies() {
@@ -136,13 +135,13 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         //     index++;
         // }
 
-        individus = getIndividus();
+        ArrayList<Animal> currentIndividus = getIndividus();
 
-        for (int i = 0; i<individus.size(); i++) {
-            Animal a = individus.get(i);
+        for (int i = 0; i<currentIndividus.size(); i++) {
+            Animal a = currentIndividus.get(i);
             a.vieillir();
             if(!a.estVivant()) {
-                individus.remove(i);
+                getIndividus().remove(i);
             }
         }
 
@@ -151,11 +150,41 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void chasser() {
         // TODO Auto-generated method stub
         melanger();
+
+        int nombreProiesChassables = getNombreProiesChassables();
+        ArrayList<Animal> currentIndividus = getIndividus();
+
+        for (int i = 0; i<currentIndividus.size(); i++) {
+            Animal a = currentIndividus.get(i);
+            a.manger();
+        }
+
+
     }
 
     public void reproduire() {
-        // TODO Auto-generated method stub
-        
+
+        int nombreParentsProies = 0;
+        int nombreParentsPredateurs = 0;
+
+        ArrayList<Animal> currentIndividus = getIndividus();
+
+        for (int i = 0; i<currentIndividus.size(); i++) {
+            Animal a = currentIndividus.get(i);
+            if (a.getAge() >= a.getAgeMature()) {
+                if (a.estProie()) {
+                    nombreParentsProies++;
+                    if(nombreParentsProies%2 == 0) {
+                        getIndividus().add(a.accoucher());
+                    }
+                } else if (a.estPredateur()) {
+                    nombreParentsPredateurs++;
+                    if(nombreParentsPredateurs%2 == 0) {
+                        getIndividus().add(a.accoucher());
+                    }
+                }
+            }
+        }
     }
 
     public void melanger() {
@@ -164,29 +193,27 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     public Iterator<Animal> iterator() { // TO VERIFY
         
-        // Iterator<Animal> a = new Iterator<Animal>() {
+        Iterator<Animal> a = new Iterator<Animal>() {
 
-        //     private int currentIndex = 0;
+        private int currentIndex = 0;
 
-        //     @Override
-        //     public boolean hasNext() {
-        //         return currentIndex < currentSize && individus.get(currentIndex) != null;
-        //     }
+        @Override
+        public boolean hasNext() {
+            return currentIndex < currentSize && individus.get(currentIndex) != null;
+        }
 
-        //     @Override
-        //     public Animal next() {
-        //         return individus.get(currentIndex++);
-        //     }
+        @Override
+        public Animal next() {
+            return individus.get(currentIndex++);
+        }
 
-        //     @Override
-        //     public void remove() {
-        //         throw new UnsupportedOperationException();
-        //     }
-        // };
-        
-        // return a;
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    };
 
-        return null;
+        return a;
     }
 
 }

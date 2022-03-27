@@ -32,17 +32,15 @@ public class Animal implements ProiePredateur {
     }
 
     public void manger() {
-        // TODO Auto-generated method stub
+        double masseNecessaire = masse * 2;
         
     }
 
     public Animal accoucher() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public void mourir() {
-        // TODO Auto-generated method stub
         estVivant = false;
     }
 

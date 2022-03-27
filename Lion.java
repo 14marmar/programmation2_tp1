@@ -29,6 +29,11 @@ public class Lion extends Animal {
         this.estVivant = true;
     }
 
+    @Override
+    public Animal accoucher() {
+        return new Lion(facteurCroissance);
+    }
+
 }
 
     // TO BE COMPLETED //
