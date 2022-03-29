@@ -24,7 +24,6 @@ import java.util.Random;
 public class Population implements EcoSysteme, Iterable<Animal> {
 
     private Herbe herbe; // Quantity of herbs
-    private int currentSize; // Current size of individus
 
     // TO BE COMPLETED //
     private ArrayList<Animal> individus = new ArrayList<>();
@@ -34,8 +33,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         individus.addAll(proies);
         individus.addAll(predateurs);
         this.herbe = herbe;
-
-        currentSize = individus.size();
 
     }
 
@@ -125,40 +122,54 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     public void vieillir() {
-        // int index = 0;
 
-        // for (Animal a : getIndividus()) {
-        //     a.vieillir();
-        //     if(!a.estVivant()) {
-        //         getIndividus().remove(index);
-        //     }
-        //     index++;
-        // }
-
-        ArrayList<Animal> currentIndividus = getIndividus();
-
-        for (int i = 0; i<currentIndividus.size(); i++) {
-            Animal a = currentIndividus.get(i);
+        for (Animal a : getIndividus()) {
             a.vieillir();
-            if(!a.estVivant()) {
-                getIndividus().remove(i);
-            }
         }
+
+        tuerAnimaux();
 
     }
 
     public void chasser() {
-        // TODO Auto-generated method stub
         melanger();
 
         int nombreProiesChassables = getNombreProiesChassables();
-        ArrayList<Animal> currentIndividus = getIndividus();
+        int nombreProiesChassees = 0;
+        double herbeDisponible = herbe.getMasseAnnuelle();
 
-        for (int i = 0; i<currentIndividus.size(); i++) {
-            Animal a = currentIndividus.get(i);
-            a.manger();
+        for (Animal a : getIndividus()) {
+            double masseNecessaire = a.getMasse()*2;
+
+            if (a.estProie() && a.estVivant()) {
+                if (masseNecessaire <= herbeDisponible) {
+                    herbeDisponible -= masseNecessaire;
+                    a.manger();
+                } else {
+                    a.mourir();
+                }
+            } else if (a.estPredateur() && a.estVivant()) {
+                if(nombreProiesChassees < nombreProiesChassables) {
+                    for (Animal b : getIndividus()) {
+                        if (b.estProie() && b.estVivant()) {
+                            a.manger();
+                            b.mourir();
+                            masseNecessaire -= b.getMasse();
+                            nombreProiesChassees++;
+                        }
+                        
+                        if (masseNecessaire <= 0 || nombreProiesChassees == nombreProiesChassables) {
+                            break;
+                        }
+                    }
+                } else {
+                    a.mourir();
+                }
+            }
         }
 
+        // INTERACTION AVEC MASSE D'HERBE????????
+        tuerAnimaux();
 
     }
 
@@ -191,29 +202,42 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         Collections.shuffle(this.individus, new Random(4));
     }
 
-    public Iterator<Animal> iterator() { // TO VERIFY
-        
+    public void tuerAnimaux() {
+        Iterator<Animal> it = individus.iterator();
+
+        while (it.hasNext()) {
+            Animal a = it.next();
+            
+            if (!a.estVivant) {
+                it.remove();
+            }
+        }
+    }
+
+    public Iterator<Animal> iterator() {
+
         Iterator<Animal> a = new Iterator<Animal>() {
 
-        private int currentIndex = 0;
+            private int currentIndex = 0;
 
-        @Override
-        public boolean hasNext() {
-            return currentIndex < currentSize && individus.get(currentIndex) != null;
-        }
+            @Override
+            public boolean hasNext() {
+                return currentIndex < individus.size() && individus.get(currentIndex) != null;
+            }
 
-        @Override
-        public Animal next() {
-            return individus.get(currentIndex++);
-        }
+            @Override
+            public Animal next() {
+                return individus.get(currentIndex++);
+            }
 
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    };
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
 
         return a;
+
     }
 
 }

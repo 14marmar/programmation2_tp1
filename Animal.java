@@ -32,7 +32,7 @@ public class Animal implements ProiePredateur {
     }
 
     public void manger() {
-        double masseNecessaire = masse * 2;
+        
         
     }
 
@@ -49,7 +49,7 @@ public class Animal implements ProiePredateur {
     }
 
     public boolean estMature() {
-        
+
         if (age >= ageMature) {
             return true;
         } else {
