@@ -172,23 +172,30 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
             double masseNecessaire = a.getMasse() * 2; // necessary amount of mass that an animal needs to consume to
                                                        // sustain itself
-
+            // if current animal a is a living antelope ...
             if (a.estProie() && a.estVivant()) {
+                // and if there remains enough grass to feed it ...
                 if (masseNecessaire <= herbeDisponible) {
+                    // remove said amount
                     herbeDisponible -= masseNecessaire;
                     // a.manger();
                 } else {
                     a.mourir();
                 }
+            // if current animal a is a living lion ..
             } else if (a.estPredateur() && a.estVivant()) {
+                // and if there remains enough antelopes that can be hunted ...
                 if (nombreProiesChassees < nombreProiesChassables) {
+                    // find the next antelope b to be hunted if it exists
                     for (Animal b : getIndividus()) {
                         if (b.estProie() && b.estVivant()) {
                             // a.manger();
+                            // remove mass needed to be eaten and increase number of hunted preys
                             masseNecessaire -= b.getMasse();
                             nombreProiesChassees++;
                             b.mourir();
 
+                            // move on to the next animal if the lion has been fed or starved to death
                             if (masseNecessaire <= 0) {
                                 break;
                             } else if (nombreProiesChassees >= nombreProiesChassables) {
@@ -202,39 +209,52 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 }
             }
         }
-
+        // set the correct mass of herb left
         herbe.setMasseAnnuelle(herbeDisponible);
+        // remove the dead animals from the array
         tuerAnimaux();
 
     }
 
+    // make the animals breed
     public void reproduire() {
 
-        int nombreParentsProies = 0;
-        int nombreParentsPredateurs = 0;
+        int nombreParentsProies = 0; // initial number of parent antelopes
+        int nombreParentsPredateurs = 0; // initial number of parent lions
 
         ArrayList<Animal> currentIndividus = getIndividus();
 
+        // for each mature animal in the array
         for (int i = 0; i < currentIndividus.size(); i++) {
+
             Animal a = currentIndividus.get(i);
+
+            // determine if it is a parent antelope
             if (a.estMature() && a.estProie()) {
                 nombreParentsProies++;
+                // for each pair of parent antelopes ...
                 if (nombreParentsProies % 2 == 0) {
+                    // produce a calf
                     getIndividus().add(a.accoucher());
                 }
             } else if (a.estMature() && a.estPredateur()) {
+                // increase the amount of parent lions
                 nombreParentsPredateurs++;
+                // for each pair of parent lions ...
                 if (nombreParentsPredateurs % 2 == 0) {
+                    // produce a cub
                     getIndividus().add(a.accoucher());
                 }
             }
         }
     }
 
+    // shuffle the order of animals in the array
     public void melanger() {
         Collections.shuffle(this.individus, new Random(4));
     }
 
+    // remove the dead animals from the array
     public void tuerAnimaux() {
         Iterator<Animal> it = individus.iterator();
 
