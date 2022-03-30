@@ -102,7 +102,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     // determines the amount of antelopes that can be hunted
     public int getNombreProiesChassables() {
         double nombreProies = getNombreProies(); // total number of antelopes
-        double nombreProiesChassablesDouble = Math.round(nombreProies * 0.20); // calculate 20% of the antelope
+        double nombreProiesChassablesDouble = Math.floor(nombreProies * 0.20); // calculate 20% of the antelope
                                                                                // population
         int nombreProiesChassables = (int) nombreProiesChassablesDouble; // number of antelopes that can be hunted
 
@@ -182,7 +182,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 } else {
                     a.mourir();
                 }
-            // if current animal a is a living lion ..
+                // if current animal a is a living lion ..
             } else if (a.estPredateur() && a.estVivant()) {
                 // and if there remains enough antelopes that can be hunted ...
                 if (nombreProiesChassees < nombreProiesChassables) {
@@ -209,6 +209,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 }
             }
         }
+
         // set the correct mass of herb left
         herbe.setMasseAnnuelle(herbeDisponible);
         // remove the dead animals from the array
@@ -219,8 +220,11 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     // make the animals breed
     public void reproduire() {
 
-        int nombreParentsProies = 0; // initial number of parent antelopes
-        int nombreParentsPredateurs = 0; // initial number of parent lions
+        int nombreBebesProies = 0; // Number of antelope calfs born so far
+        int nombreBebesPredateurs = 0; // Number of lion cubs born so far
+
+        int nombreBebesProiesAttendues = (int)Math.floor(getNombreProiesMatures()/2); // Expected number of calfs to be born
+        int nombreBebesPredateursAttendues = (int)Math.floor(getNombrePredateursMatures()/2); // Expected number of cubs to be born
 
         ArrayList<Animal> currentIndividus = getIndividus();
 
@@ -230,21 +234,21 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             Animal a = currentIndividus.get(i);
 
             // determine if it is a parent antelope
-            if (a.estMature() && a.estProie()) {
-                nombreParentsProies++;
-                // for each pair of parent antelopes ...
-                if (nombreParentsProies % 2 == 0) {
-                    // produce a calf
-                    getIndividus().add(a.accoucher());
-                }
-            } else if (a.estMature() && a.estPredateur()) {
-                // increase the amount of parent lions
-                nombreParentsPredateurs++;
-                // for each pair of parent lions ...
-                if (nombreParentsPredateurs % 2 == 0) {
-                    // produce a cub
-                    getIndividus().add(a.accoucher());
-                }
+            if (a.estMature() && a.estProie() && nombreBebesProies < nombreBebesProiesAttendues) {
+                // produce a calf
+                nombreBebesProies++;
+                getIndividus().add(a.accoucher());
+
+            // determine if it is a parent lion
+            } else if (a.estMature() && a.estPredateur() && nombreBebesPredateurs < nombreBebesPredateursAttendues) {
+                // produce a cub
+                nombreBebesPredateurs++;
+                getIndividus().add(a.accoucher());
+            }
+
+            // end the loop once all babies have been born
+            if (nombreBebesProies == nombreBebesProiesAttendues && nombreBebesPredateurs == nombreBebesPredateursAttendues) {
+                break;
             }
         }
     }
