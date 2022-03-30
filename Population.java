@@ -100,12 +100,9 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     // determines the amount of antelopes that can be hunted
-    public int getNombreProiesChassables() {
-        double nombreProies = getNombreProies(); // total number of antelopes
-        double nombreProiesChassablesDouble = Math.floor(nombreProies * 0.20); // calculate 20% of the antelope
-                                                                               // population
-        int nombreProiesChassables = (int) nombreProiesChassablesDouble; // number of antelopes that can be hunted
-
+    public int getNombreProiesChassables() {                    
+        int nombreProiesChassables = (int)Math.floor(getNombreProies() * 0.20); // calculate 20% of the antelope
+                                                                                // population
         return nombreProiesChassables; // return the amount
     }
 
