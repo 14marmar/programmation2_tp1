@@ -33,24 +33,26 @@ public class Animal implements ProiePredateur {
         }
     }
 
+    // implementation of eating method
     public void manger() {
-        
-        
     }
 
+    // implementation of birth method
     public Animal accoucher() {
         return null;
     }
 
-    // 
+    // sets animal as dead
     public void mourir() {
         estVivant = false;
     }
 
+    // boolean that sets animal as living
     public boolean estVivant() {
         return estVivant;
     }
 
+    // boolean that sets animal as mature if it grows old enough
     public boolean estMature() {
 
         if (age >= ageMature) {
@@ -66,6 +68,7 @@ public class Animal implements ProiePredateur {
         this.estProie = proie;
     }
 
+    // boolean that sets animal as prey
     public boolean estProie() {
         return estProie;
     }
@@ -75,6 +78,7 @@ public class Animal implements ProiePredateur {
         this.estPredateur = predateur;
     }
 
+    // boolean that sets animal as predator
     public boolean estPredateur() {
         return estPredateur;
     }
@@ -108,8 +112,6 @@ public class Animal implements ProiePredateur {
     public int getAgeMature() {
         return ageMature;
     }
-
-    
 
 
 }

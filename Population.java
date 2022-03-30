@@ -271,11 +271,13 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         }
     }
 
+    // implementation of the iterator
+    // SOURCE : https://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
     public Iterator<Animal> iterator() {
 
         Iterator<Animal> a = new Iterator<Animal>() {
 
-            private int currentIndex = 0;
+            private int currentIndex = 0; // current index that's being interated on
 
             @Override
             public boolean hasNext() {
