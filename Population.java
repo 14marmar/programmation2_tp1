@@ -29,8 +29,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     private ArrayList<Animal> individus = new ArrayList<>();
 
     // constructor
-    //   assigns : initial amount of preys and predators in the array
-    //             quantity of herb
+    // assigns : initial amount of preys and predators in the array
+    // quantity of herb
     public Population(Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs) {
 
         individus.addAll(proies);
@@ -46,7 +46,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if the current animal is an antelope ...
-            if(a.estProie()) {
+            if (a.estProie()) {
                 nombreProies++; // increase the number of antelopes
             }
         }
@@ -61,7 +61,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if the current animal is a lion ...
-            if(a.estPredateur()) {
+            if (a.estPredateur()) {
                 nombrePredateurs++; // increase the number of lions
             }
         }
@@ -76,7 +76,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if the current animal is a mature antelope...
-            if(a.estProie() && a.estMature()) {
+            if (a.estProie() && a.estMature()) {
                 nombreProiesMatures++; // increase the number of mature antelopes
             }
         }
@@ -91,7 +91,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if the current animal is a mature lion ...
-            if(a.estPredateur() && a.estMature()) {
+            if (a.estPredateur() && a.estMature()) {
                 nombrePredateursMatures++; // increase the number of mature lions
             }
         }
@@ -102,9 +102,9 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     // determines the amount of antelopes that can be hunted
     public int getNombreProiesChassables() {
         double nombreProies = getNombreProies(); // total number of antelopes
-        double nombreProiesChassablesDouble = Math.round(nombreProies*0.20); // calculate 20% of the antelope population
-        int nombreProiesChassables = (int)nombreProiesChassablesDouble; // number of antelopes that can be hunted
-        System.out.println( nombreProiesChassables );
+        double nombreProiesChassablesDouble = Math.round(nombreProies * 0.20); // calculate 20% of the antelope
+                                                                               // population
+        int nombreProiesChassables = (int) nombreProiesChassablesDouble; // number of antelopes that can be hunted
 
         return nombreProiesChassables; // return the amount
     }
@@ -121,7 +121,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if current animal is an antelope ...
-            if(a.estProie()) {
+            if (a.estProie()) {
                 masseProies += a.getMasse(); // add its mass to the total amount
             }
         }
@@ -136,7 +136,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         // in the array of animals ...
         for (Animal a : getIndividus()) {
             // if current animal is a lion ...
-            if(a.estPredateur()) {
+            if (a.estPredateur()) {
                 massePredateurs += a.getMasse(); // add its mass to the total amount
             }
         }
@@ -148,7 +148,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void vieillir() {
 
         // make the herb age
-        herbe.vieillir(); 
+        herbe.vieillir();
 
         // for each animal in the array of animal...
         for (Animal a : getIndividus()) {
@@ -170,7 +170,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         for (Animal a : getIndividus()) {
 
-            double masseNecessaire = a.getMasse()*2; // necessary amount of mass that an animal needs to consume to sustain itself
+            double masseNecessaire = a.getMasse() * 2; // necessary amount of mass that an animal needs to consume to
+                                                       // sustain itself
 
             if (a.estProie() && a.estVivant()) {
                 if (masseNecessaire <= herbeDisponible) {
@@ -180,19 +181,20 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     a.mourir();
                 }
             } else if (a.estPredateur() && a.estVivant()) {
-                if(nombreProiesChassees < nombreProiesChassables) {
+                if (nombreProiesChassees < nombreProiesChassables) {
                     for (Animal b : getIndividus()) {
                         if (b.estProie() && b.estVivant()) {
                             // a.manger();
                             masseNecessaire -= b.getMasse();
                             nombreProiesChassees++;
                             b.mourir();
-                        }
-                        if (masseNecessaire <= 0) {
-                            break;
-                        } else if (nombreProiesChassees >= nombreProiesChassables) {
-                            a.mourir();
-                            break;
+
+                            if (masseNecessaire <= 0) {
+                                break;
+                            } else if (nombreProiesChassees >= nombreProiesChassables) {
+                                a.mourir();
+                                break;
+                            }
                         }
                     }
                 } else {
@@ -213,16 +215,16 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         ArrayList<Animal> currentIndividus = getIndividus();
 
-        for (int i = 0; i<currentIndividus.size(); i++) {
+        for (int i = 0; i < currentIndividus.size(); i++) {
             Animal a = currentIndividus.get(i);
             if (a.estMature() && a.estProie()) {
                 nombreParentsProies++;
-                if (nombreParentsProies%2 == 0) {
+                if (nombreParentsProies % 2 == 0) {
                     getIndividus().add(a.accoucher());
                 }
             } else if (a.estMature() && a.estPredateur()) {
                 nombreParentsPredateurs++;
-                if(nombreParentsPredateurs%2 == 0) {
+                if (nombreParentsPredateurs % 2 == 0) {
                     getIndividus().add(a.accoucher());
                 }
             }
@@ -238,8 +240,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         while (it.hasNext()) {
             Animal a = it.next();
-            
-            if (!a.estVivant) {
+
+            if (!a.estVivant()) {
                 it.remove();
             }
         }
