@@ -25,9 +25,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     private Herbe herbe; // Quantity of herbs
 
-    // TO BE COMPLETED //
+    // array composed of the savana's animals
     private ArrayList<Animal> individus = new ArrayList<>();
 
+    // constructor
+    //   assigns : initial amount of preys and predators in the array
+    //             quantity of herb
     public Population(Herbe herbe, ArrayList<Animal> proies, ArrayList<Animal> predateurs) {
 
         individus.addAll(proies);
@@ -36,112 +39,138 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     }
 
+    // determines number of antelopes in the array
     public int getNombreProies() {
-        int nombreProies = 0;
+        int nombreProies = 0; // initial number of antelopes
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if the current animal is an antelope ...
             if(a.estProie()) {
-                nombreProies++;
+                nombreProies++; // increase the number of antelopes
             }
         }
 
-        return nombreProies;
+        return nombreProies; // return the amount
     }
 
+    // determines number of lions in the array
     public int getNombrePredateurs() {
-        int nombrePredateurs = 0;
+        int nombrePredateurs = 0; // initial number of lions
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if the current animal is a lion ...
             if(a.estPredateur()) {
-                nombrePredateurs++;
+                nombrePredateurs++; // increase the number of lions
             }
         }
 
-        return nombrePredateurs;
+        return nombrePredateurs; // return the amount
     }
 
+    // determines number of mature antelopes in the array
     public int getNombreProiesMatures() {
-        int nombreProiesMatures = 0;
+        int nombreProiesMatures = 0; // initial number of mature antelopes
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if the current animal is a mature antelope...
             if(a.estProie() && a.estMature()) {
-                nombreProiesMatures++;
+                nombreProiesMatures++; // increase the number of mature antelopes
             }
         }
 
-        return nombreProiesMatures;
+        return nombreProiesMatures; // return the amount
     }
 
+    // determines number of mature lions in the array
     public int getNombrePredateursMatures() {
-        int nombrePredateursMatures = 0;
+        int nombrePredateursMatures = 0;// initial number of mature lions
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if the current animal is a mature lion ...
             if(a.estPredateur() && a.estMature()) {
-                nombrePredateursMatures++;
+                nombrePredateursMatures++; // increase the number of mature lions
             }
         }
 
-        return nombrePredateursMatures;
+        return nombrePredateursMatures; // return the amount
     }
 
+    // determines the amount of antelopes that can be hunted
     public int getNombreProiesChassables() {
-        double nombreProies = getNombreProies();
-        double nombreProiesChassablesDouble = Math.round(nombreProies*0.20); // Calculate 20% of the antelope population
-        int nombreProiesChassables = (int)nombreProiesChassablesDouble;
+        double nombreProies = getNombreProies(); // total number of antelopes
+        double nombreProiesChassablesDouble = Math.round(nombreProies*0.20); // calculate 20% of the antelope population
+        int nombreProiesChassables = (int)nombreProiesChassablesDouble; // number of antelopes that can be hunted
         System.out.println( nombreProiesChassables );
 
-        return nombreProiesChassables;
+        return nombreProiesChassables; // return the amount
     }
 
+    // animal getter in the array
     public ArrayList<Animal> getIndividus() {
         return this.individus;
     }
 
+    // determines the antelopes' total mass
     public double masseProies() {
-        double masseProies = 0;
+        double masseProies = 0; // initial total mass
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if current animal is an antelope ...
             if(a.estProie()) {
-                masseProies += a.getMasse();
+                masseProies += a.getMasse(); // add its mass to the total amount
             }
         }
 
-        return masseProies;
+        return masseProies; // return the amount
     }
 
+    // determines the lions' total mass
     public double massePredateurs() {
-        double massePredateurs = 0;
+        double massePredateurs = 0; // initial total mass
 
+        // in the array of animals ...
         for (Animal a : getIndividus()) {
+            // if current animal is a lion ...
             if(a.estPredateur()) {
-                massePredateurs += a.getMasse();
+                massePredateurs += a.getMasse(); // add its mass to the total amount
             }
         }
 
-        return massePredateurs;
+        return massePredateurs; // return the amount
     }
 
+    // makes animals age
     public void vieillir() {
 
-        herbe.vieillir();
+        // make the herb age
+        herbe.vieillir(); 
 
+        // for each animal in the array of animal...
         for (Animal a : getIndividus()) {
-            a.vieillir();
+            a.vieillir(); // make them grow older
         }
 
+        // remove the dead animals from the array
         tuerAnimaux();
 
     }
 
+    // make the animals feed themselves
     public void chasser() {
-        melanger();
+        melanger(); // shuffle the order of animals in the array
 
-        int nombreProiesChassables = getNombreProiesChassables();
-        int nombreProiesChassees = 0;
-        double herbeDisponible = herbe.getMasseAnnuelle();
+        int nombreProiesChassables = getNombreProiesChassables(); // number of antelopes that can be hunted
+        int nombreProiesChassees = 0; // number of hunted antelopes
+        double herbeDisponible = herbe.getMasseAnnuelle(); // amount of herb that can be eaten
 
         for (Animal a : getIndividus()) {
-            double masseNecessaire = a.getMasse()*2;
+
+            double masseNecessaire = a.getMasse()*2; // necessary amount of mass that an animal needs to consume to sustain itself
 
             if (a.estProie() && a.estVivant()) {
                 if (masseNecessaire <= herbeDisponible) {

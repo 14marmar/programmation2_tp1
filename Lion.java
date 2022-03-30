@@ -16,8 +16,16 @@
 
 public class Lion extends Animal {
 
-    public static int AGEMAX = 50;
+    public static int AGEMAX = 50; // animal's max age before death
     
+    // constructor
+    //   defines : animal's age upon birth  
+    //             animal's max age before death
+    //             animal's age upon which it's considered an adult
+    //             animal's mass upon birth
+    //             animal's growth factor
+    //             whether animal is predator or prey
+    //             sets animal as alive
     public Lion(double facteurCroissance) {
         this.age = 0;
         this.ageMax = AGEMAX;
@@ -29,11 +37,10 @@ public class Lion extends Animal {
         this.estVivant = true;
     }
 
+    // simulates the birth of an animal
     @Override
     public Animal accoucher() {
-        return new Lion(facteurCroissance);
+        return new Lion(facteurCroissance); // return a new lion (cub)
     }
 
 }
-
-    // TO BE COMPLETED //

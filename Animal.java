@@ -18,16 +18,18 @@ import java.util.Collections;
 
 public class Animal implements ProiePredateur {
 
-    protected int age, ageMax, ageMature;
-    protected double masse, facteurCroissance;
-    protected boolean estPredateur, estProie, estVivant;
+    protected int age, ageMax, ageMature; // animal's current age, maximum age and mature age
+    protected double masse, facteurCroissance; // animal's current max and growth factor
+    protected boolean estPredateur, estProie, estVivant; // determines whether an animal is prey or predator; alive or dead
 
+    // makes an animal grow older
     public void vieillir() {
-        age++;
-        masse = masse * facteurCroissance;
+        age++; // increase an animal's age by 1
+        masse = masse * facteurCroissance; // multiply an animal's mass by its growth factor to increase set mass
 
+        // if an animal's age exceeds their species' maximum age ...
         if (age > ageMax) {
-            mourir();
+            mourir(); // it dies
         }
     }
 
@@ -40,6 +42,7 @@ public class Animal implements ProiePredateur {
         return null;
     }
 
+    // 
     public void mourir() {
         estVivant = false;
     }
@@ -58,6 +61,7 @@ public class Animal implements ProiePredateur {
 
     }
 
+    // prey setter
     public void setProie(boolean proie) {
         this.estProie = proie;
     }
@@ -66,6 +70,7 @@ public class Animal implements ProiePredateur {
         return estProie;
     }
 
+    // predator setter
     public void setPredateur(boolean predateur) {
         this.estPredateur = predateur;
     }
@@ -74,26 +79,32 @@ public class Animal implements ProiePredateur {
         return estPredateur;
     }
 
+    // mass getter
     public double getMasse() {
         return masse;
     }
 
+    // mass setter
     public void setMasse(double masse) {
         this.masse = masse;
     }
 
+    // age setter
     public void setAge(int age) {
         this.age = age;
     }
 
+    // age getter
     public int getAge() {
         return age;
     }
 
+    // max age getter
     public int getAgeMax() {
         return ageMax;
     }
 
+    // mature age getter
     public int getAgeMature() {
         return ageMature;
     }
