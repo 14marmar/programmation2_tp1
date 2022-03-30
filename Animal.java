@@ -11,16 +11,17 @@ import java.util.Collections;
 //
 
 /**
-   class Animal
-    implements the Prey/Predator relationship
-
-**/
+ * class Animal
+ * implements the Prey/Predator relationship
+ * 
+ **/
 
 public class Animal implements ProiePredateur {
 
     protected int age, ageMax, ageMature; // animal's current age, maximum age and mature age
     protected double masse, facteurCroissance; // animal's current max and growth factor
-    protected boolean estPredateur, estProie, estVivant; // determines whether an animal is prey or predator; alive or dead
+    protected boolean estPredateur, estProie, estVivant; // determines whether an animal is prey or predator; alive or
+                                                         // dead
 
     // makes an animal grow older
     public void vieillir() {
@@ -112,6 +113,5 @@ public class Animal implements ProiePredateur {
     public int getAgeMature() {
         return ageMature;
     }
-
 
 }

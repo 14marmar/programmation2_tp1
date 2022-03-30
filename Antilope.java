@@ -9,23 +9,23 @@
 //
 
 /**
-   class Antilope
-    extends Animal
-
-**/
+ * class Antilope
+ * extends Animal
+ * 
+ **/
 
 public class Antilope extends Animal {
 
     public static int AGEMAX = 15; // animal's max age before death
 
     // constructor
-    //   defines : animal's age upon birth  
-    //             animal's max age before death
-    //             animal's age upon which it's considered an adult
-    //             animal's mass upon birth
-    //             animal's growth factor
-    //             whether animal is predator or prey
-    //             sets animal as alive
+    // defines : animal's age upon birth
+    // animal's max age before death
+    // animal's age upon which it's considered an adult
+    // animal's mass upon birth
+    // animal's growth factor
+    // whether animal is predator or prey
+    // sets animal as alive
     public Antilope(double facteurCroissance) {
         this.age = 0;
         this.ageMax = AGEMAX;
@@ -34,7 +34,7 @@ public class Antilope extends Animal {
         this.facteurCroissance = facteurCroissance;
         this.estPredateur = false;
         this.estProie = true;
-        this.estVivant = true; 
+        this.estVivant = true;
     }
 
     // simulates the birth of an animal
