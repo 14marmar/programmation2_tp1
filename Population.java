@@ -64,7 +64,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         int nombreProiesMatures = 0;
 
         for (Animal a : getIndividus()) {
-            if(a.estProie() && a.getAge() >= a.getAgeMature()) {
+            if(a.estProie() && a.estMature()) {
                 nombreProiesMatures++;
             }
         }
@@ -76,12 +76,11 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         int nombrePredateursMatures = 0;
 
         for (Animal a : getIndividus()) {
-            if(a.estPredateur() && a.getAge() >= a.getAgeMature()) {
+            if(a.estPredateur() && a.estMature()) {
                 nombrePredateursMatures++;
             }
         }
 
-        System.out.println( nombrePredateursMatures );
         return nombrePredateursMatures;
     }
 
@@ -89,6 +88,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         double nombreProies = getNombreProies();
         double nombreProiesChassablesDouble = Math.round(nombreProies*0.20); // Calculate 20% of the antelope population
         int nombreProiesChassables = (int)nombreProiesChassablesDouble;
+        System.out.println( nombreProiesChassables );
 
         return nombreProiesChassables;
     }
@@ -123,6 +123,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     public void vieillir() {
 
+        herbe.vieillir();
+
         for (Animal a : getIndividus()) {
             a.vieillir();
         }
@@ -144,7 +146,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             if (a.estProie() && a.estVivant()) {
                 if (masseNecessaire <= herbeDisponible) {
                     herbeDisponible -= masseNecessaire;
-                    a.manger();
+                    // a.manger();
                 } else {
                     a.mourir();
                 }
@@ -152,13 +154,15 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 if(nombreProiesChassees < nombreProiesChassables) {
                     for (Animal b : getIndividus()) {
                         if (b.estProie() && b.estVivant()) {
-                            a.manger();
-                            b.mourir();
+                            // a.manger();
                             masseNecessaire -= b.getMasse();
                             nombreProiesChassees++;
+                            b.mourir();
                         }
-                        
-                        if (masseNecessaire <= 0 || nombreProiesChassees == nombreProiesChassables) {
+                        if (masseNecessaire <= 0) {
+                            break;
+                        } else if (nombreProiesChassees >= nombreProiesChassables) {
+                            a.mourir();
                             break;
                         }
                     }
@@ -168,7 +172,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             }
         }
 
-        // INTERACTION AVEC MASSE D'HERBE????????
+        herbe.setMasseAnnuelle(herbeDisponible);
         tuerAnimaux();
 
     }
@@ -182,17 +186,15 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         for (int i = 0; i<currentIndividus.size(); i++) {
             Animal a = currentIndividus.get(i);
-            if (a.getAge() >= a.getAgeMature()) {
-                if (a.estProie()) {
-                    nombreParentsProies++;
-                    if(nombreParentsProies%2 == 0) {
-                        getIndividus().add(a.accoucher());
-                    }
-                } else if (a.estPredateur()) {
-                    nombreParentsPredateurs++;
-                    if(nombreParentsPredateurs%2 == 0) {
-                        getIndividus().add(a.accoucher());
-                    }
+            if (a.estMature() && a.estProie()) {
+                nombreParentsProies++;
+                if (nombreParentsProies%2 == 0) {
+                    getIndividus().add(a.accoucher());
+                }
+            } else if (a.estMature() && a.estPredateur()) {
+                nombreParentsPredateurs++;
+                if(nombreParentsPredateurs%2 == 0) {
+                    getIndividus().add(a.accoucher());
                 }
             }
         }
